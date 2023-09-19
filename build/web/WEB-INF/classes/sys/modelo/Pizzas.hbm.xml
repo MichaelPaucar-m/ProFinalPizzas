@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 18/09/2023 01:17:15 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="sys.modelo.Pizzas" table="pizzas" catalog="pizzas" optimistic-lock="version">
+        <id name="idPizzas" type="java.lang.Integer">
+            <column name="idPizzas" />
+            <generator class="identity" />
+        </id>
+        <property name="pizzasNombre" type="string">
+            <column name="pizzasNombre" length="45" />
+        </property>
+        <property name="pizzaPrecio" type="java.lang.Integer">
+            <column name="pizzaPrecio" />
+        </property>
+        <property name="pizzaIngredientes" type="string">
+            <column name="pizzaIngredientes" length="45" />
+        </property>
+    </class>
+</hibernate-mapping>

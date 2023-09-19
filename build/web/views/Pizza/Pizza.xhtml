@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"> 
+    
+    
+    <body>
+
+        <ui:composition template="./../../plantilla/plantilla.xhtml">
+
+            <ui:define name="content">
+                <h2>Datos del Pizza</h2>
+                <h:form>
+                    <p:commandButton value="Nuevo Pizza" actionListener="#{pizzaBean.preparePizzas()}"
+                                     oncomplete="PF('dialogNuevoPizza').show()"
+                                     update="formNuevoPizza"/>
+                </h:form>
+
+                <h:form id="formListaPizzas">
+                    <p:dataTable id="tablaPizzas" paginator="true" paginatorPosition="top" 
+                                 var="pizza" value="#{pizzaBean.pizzas}">
+                       <p:column headerText="Codigo">
+                           <h:outputText value="#{pizza.idPizzas}"/>
+                        </p:column> 
+
+                        <p:column headerText="Nombre delcliente">
+                            <h:outputText value="#{pizza.pizzasNombre} "/>
+                        </p:column> 
+
+                        <p:column headerText="Precio">
+                            <h:outputText value="#{pizza.pizzaPrecio}"/>
+                        </p:column>  
+                        <p:column headerText="Ingredientes">
+                            <h:outputText value="#{pizza.pizzaIngredientes}"/>
+                        </p:column>  
+                       
+
+                        <p:column headerText="Modificar">
+                            <p:commandButton value="Modificar" oncomplete="PF('dialogModificarPizza').show()"
+                                             update="formModificarPizza">
+                                <f:setPropertyActionListener target="#{pizzaBean.pizza}" value="#{pizza}"/>                 
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Eliminar" >
+                            <p:commandButton value="Eliminar" oncomplete="PF('dialogEliminarPizza').show()"
+                                             update="formEliminarPizza">
+                                <f:setPropertyActionListener target="#{pizzaBean.pizza}" value="#{pizza}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+
+
+
+                <h:form id="formNuevoPizza">
+                    <p:dialog id="dlgNuevoPizza" widgetVar="dialogNuevoPizza" resizable="false" showEffect="explode"
+                              hideEffect="explode" modal="true">
+                        <p:panelGrid columns="2" style="margin: 0 auto">
+                           <p:outputLabel value="Nombre"/> 
+                           <p:inputText value="#{pizzaBean.pizza.pizzasNombre}"/>
+                            <p:outputLabel value="Pecio"/> 
+                            <p:inputText value="#{pizzaBean.pizza.pizzaPrecio}"/>
+                            <p:outputLabel value="Ingredientes"/> 
+                            <p:inputText value="#{pizzaBean.pizza.pizzaIngredientes}"/> 
+                           
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" actionListener="#{pizzaBean.insertPizzas()}"
+                                         update="formListaPizzas:tablaPizzas"
+                                         oncomplete="PF('dialogNuevoPizza').hide()"/>
+                        <p:commandButton value="Cancelar" oncomplete="PF('dialogNuevoPizza').hide()"/>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="formModificarPizza">
+                    <p:dialog id="dlgModificarPizza" widgetVar="dialogModificarPizza" resizable="false" showEffect="explode"
+                              hideEffect="explode" modal="true">
+                        <p:panelGrid columns="2" style="margin: 0 auto">
+                            
+                             <p:outputLabel value="Nombre"/> 
+                           <p:inputText value="#{pizzaBean.pizza.pizzasNombre}"/>
+                            <p:outputLabel value="Pecio"/> 
+                            <p:inputText value="#{pizzaBean.pizza.pizzaPrecio}"/>
+                            <p:outputLabel value="Ingredientes"/> 
+                            <p:inputText value="#{pizzaBean.pizza.pizzaIngredientes}"/> 
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" actionListener="#{pizzaBean.updatePizzas()}"
+                                         update="formListaPizzas:tablaPizzas"
+                                         oncomplete="PF('dialogModificarPizza').hide()"/>
+                        <p:commandButton value="Cancelar" oncomplete="PF('dialogModificarPizza').hide()"/>
+                    </p:dialog>
+                </h:form>
+                
+                <h:form id="formEliminarPizza">
+                    <p:dialog id="dlgEliminarPizza" widgetVar="dialogEliminarPizza" resizable="false" showEffect="explode"
+                              hideEffect="explode" modal="true">
+                        <h:outputText value="Desea eliminar el vendedor?  "/>
+                        <p:commandButton value="SI" actionListener="#{pizzaBean.deletePizzas()}"
+                                         update="formListaPizzas:tablaPizzas"
+                                         oncomplete="PF('dialogEliminarPizza').hide()"/>
+                        <p:commandButton value="NO" oncomplete="PF('dialogEliminarPizza').hide()"/>
+                    </p:dialog>
+                </h:form>
+                
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
